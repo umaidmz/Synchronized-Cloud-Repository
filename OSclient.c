@@ -466,6 +466,7 @@ int main(int argc, char *argv[]){
         send(sockfd, &login, sizeof(struct user), 0);
         //add auth code here and then below code in if statement
 
+        read(sockfd, &loggedIn, sizeof(bool));
         if(loggedIn){
             while(1){
 
