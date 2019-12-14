@@ -445,7 +445,7 @@ int main(int argc, char const *argv[]){
         bool breaking=false;
         FILE* fp;
         bool loggedIn=false;
-
+        printf("waiting for client...\n");
         new_socket = accept(server_fd, (struct sockaddr *)&client_addr, (socklen_t *)&cliAddr_len);
         printf("client connected\n");
         struct user login;
@@ -455,6 +455,8 @@ int main(int argc, char const *argv[]){
         printf("received user credentials %s:%s\n", login.username, login.pwd);
         //add auth code here and then below code in if statement
 
+        loggedIn=true;
+        send(new_socket,&loggedIn,sizeof(bool),0);
         if(loggedIn){
             while(!breaking){
                 char msg_rcv[50] = {0};
@@ -557,7 +559,7 @@ int main(int argc, char const *argv[]){
                     memset(cmd_rcv, 0, sizeof(cmd_rcv));
                     memset(fname_rcv,0,sizeof(fname_rcv));
                     
-                    printf("exiting...\n");
+                    printf("exiting...\nclient disconnected.\n");
                     close(new_socket);
                     breaking=true;
                     
