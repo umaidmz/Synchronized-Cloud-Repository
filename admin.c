@@ -9,13 +9,14 @@
 int main(int argc, char const *argv[])
 {
 
-	char userAdmin[20];
+	char userAdmin[20];												//Declarations and Initializations of important variables
 	char userPwd[20];
 
 	char usernames[SIZE][20] = {{0}};
 	char passwords[SIZE][20] = {{0}};
 	int index,flag = 0;
-	printf("%s\n", "Initializing Shared Memory...");
+
+	printf("%s\n", "Initializing Shared Memory...");				//Initialzing Shared Memory
 	index = preInitSharedMemory(usernames, passwords);
 	sleep(1);
 	
@@ -23,7 +24,7 @@ int main(int argc, char const *argv[])
 	printf("%s\n%s\n", "Welcome to Account Creator", "Please verify your credentials: You have 3 tries");
 
 
-	flag = getAdminCreds(userAdmin, userPwd);
+	flag = getAdminCreds(userAdmin, userPwd);						//Verifying the admins authenticity
 	if(!flag)
 	{
 		insertIntoSharedMemory(usernames, passwords);
@@ -33,7 +34,7 @@ int main(int argc, char const *argv[])
 
 	system("clear");
 	printf("%s\n", "Users: " );
-
+																	// Functionality for the admin to manage the users
 	printUsers(usernames, passwords);
 
 	char i = NULL;
@@ -44,7 +45,7 @@ int main(int argc, char const *argv[])
 	scanf("%d", &opt);
 	while(opt){
 		char user[20] = {0};
-		switch(opt)
+		switch(opt)													//Switch case for options
 		{
 			case 1:	
 					if(index > 9)
@@ -77,9 +78,9 @@ int main(int argc, char const *argv[])
 		scanf("%d", &opt);
 	}
 	
-	
+			
 
-	printf("%s\n", "Inserting User into Memory...");
+	printf("%s\n", "Inserting User into Memory...");					//Writing the users and passwords array to the Shared Memory
 	insertIntoSharedMemory(usernames, passwords);
 	sleep(1);
 
