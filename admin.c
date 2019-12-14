@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
 			case 2:	
 					printf("Enter Username:\n");
 					scanf("%s", user);
-					if(deleteUser(user, usernames))
+					if(deleteUser(user, usernames, passwords))
 						printf("User Deleted\n");
 					else
 						printf("User not found\n");

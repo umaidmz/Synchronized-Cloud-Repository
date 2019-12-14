@@ -275,7 +275,7 @@ void printUsers(char users[][20], char passwords[][20])
   }
 }
 
-bool deleteUser(char user[20], char usernames[][20])
+bool deleteUser(char user[20], char usernames[][20], char passwords[][20])
 {
   /*
   Deletes the Specifies user from the users array. Both are passed as
@@ -287,6 +287,7 @@ bool deleteUser(char user[20], char usernames[][20])
       continue;
     if(!strcmp(user, usernames[i]) ){
       memset(usernames[i], 0, 20);
+      memset(passwords[i], 0, 20);
       return true;
     }
   }
