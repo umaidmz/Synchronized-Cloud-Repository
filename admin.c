@@ -37,22 +37,47 @@ int main(int argc, char const *argv[])
 	printUsers(usernames, passwords);
 
 	char i = NULL;
-	printf("Do you want to insert User? (y/n)\n");
-	scanf(" %c", &i);
-	while( i!='n')
-	{	
-		printf("%d\n", index);
-		if(index > 9)
+	int opt = 0;
+	printf("(1) Insert User\n");
+	printf("(2) Delete User\n");
+	printf("(0) Exit\n" );
+	scanf("%d", &opt);
+	while(opt){
+		char user[20] = {0};
+		switch(opt)
 		{
-			printf("You cannot add more users\n");
+			case 1:	
+					if(index > 9)
+					{
+						printf("You cannot add more users\n");
+						break;
+					}
+					getCreds(usernames[index], passwords[index]);
+					printf("%d\n", strlen(usernames[index]) );
+					index++;
+				break;
+
+			case 2:	
+					printf("Enter Username:\n");
+					scanf("%s", user);
+					if(deleteUser(user, usernames))
+						printf("User Deleted\n");
+					else
+						printf("User not found\n");
+				
+				break;
+
+			default:
+
 			break;
 		}
-		getCreds(usernames[index], passwords[index]);
-		printf("%d\n", strlen(usernames[index]) );
-		index++;
-		printf("Do you want to insert User? (y/n)\n");
-		scanf(" %c", &i);
+		printf("(1) Insert User\n");
+		printf("(2) Delete User\n");
+		printf("(0) Exit\n");
+		scanf("%d", &opt);
 	}
+	
+	
 
 	printf("%s\n", "Inserting User into Memory...");
 	insertIntoSharedMemory(usernames, passwords);

@@ -200,7 +200,7 @@ void insertIntoSharedMemory(char users[][20], char pwds[][20])
   for(i=0 ; i<SIZE; i++)
   {
     if(!strlen(users[i]))
-      break;
+      continue;
     strcpy(str , users[i]);
     appendSpace(users[i]);
     sprintf(ptr, "%s ", str);
@@ -213,7 +213,7 @@ void insertIntoSharedMemory(char users[][20], char pwds[][20])
   for(i=0 ; i<SIZE && users[i]!=NULL; i++)
   {
     if(!strlen(pwds[i]))
-        break;
+        continue;
       strcpy(str , pwds[i]);
       appendSpace(pwds[i]);
       sprintf(ptr, "%s ", str);
@@ -233,3 +233,17 @@ void printUsers(char users[][20], char passwords[][20])
   }
 }
 
+bool deleteUser(char user[20], char usernames[][20])
+{
+  for(int i=0; i< 10;++i)
+  {
+    if(!strlen(usernames[i]))
+      continue;
+    if(!strcmp(user, usernames[i]) ){
+      memset(usernames[i], 0, 20);
+      return true;
+    }
+  }
+  return false;
+
+}
