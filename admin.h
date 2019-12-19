@@ -117,7 +117,7 @@ void insertUser(char users[][20], char pwds[][20], int index)
   return;
 }
 
-int preInitSharedMemory(char usernames[][20], char passwords[][20])
+int preInitSharedMemory(char usernames[][20], char passwords[][20], int mode)
 {
     /*
     Star function for this library. Takes as argument usernames and passwords array
@@ -169,7 +169,8 @@ int preInitSharedMemory(char usernames[][20], char passwords[][20])
         }
 
     }
-    shm_unlink(MEM_NAME_USERS); // Removes the Shared Memory
+    if(mode)
+      shm_unlink(MEM_NAME_USERS); // Removes the Shared Memory
 
     /*
     The following code is similar to the above mentioned except it is set 
@@ -210,7 +211,8 @@ int preInitSharedMemory(char usernames[][20], char passwords[][20])
         }
 
     }
-    shm_unlink(MEM_NAME_PWDS);
+    if(mode)
+      shm_unlink(MEM_NAME_PWDS);
     }
     return index;
   }
@@ -271,7 +273,7 @@ void printUsers(char users[][20], char passwords[][20])
   { 
     if(!strlen(users[i]))
       break;
-    printf("%d\t%s\t\n",i, users[i], passwords[i]);
+    printf("%d\t%s\t%s\n",i, users[i], passwords[i]);
   }
 }
 

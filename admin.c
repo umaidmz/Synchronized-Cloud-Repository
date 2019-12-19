@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 	int index,flag = 0;
 
 	printf("%s\n", "Initializing Shared Memory...");				//Initialzing Shared Memory
-	index = preInitSharedMemory(usernames, passwords);
+	index = preInitSharedMemory(usernames, passwords, 1);
 	sleep(1);
 	
 
@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
 	}
 
 	system("clear");
-	printf("%s\n", "Users: " );
+	printf("S#\tUsers:\tPasswords\n");
 																	// Functionality for the admin to manage the users
 	printUsers(usernames, passwords);
 
@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
 	int opt = 0;
 	printf("(1) Insert User\n");
 	printf("(2) Delete User\n");
+	printf("(3) Print Users\n");
 	printf("(0) Exit\n" );
 	scanf("%d", &opt);
 	while(opt){
@@ -68,12 +69,19 @@ int main(int argc, char const *argv[])
 				
 				break;
 
+			case 3:	
+					printf("S#\tUsers:\tPasswords\n");
+					printUsers(usernames, passwords);
+				
+				break;
+
 			default:
 
 			break;
 		}
 		printf("(1) Insert User\n");
 		printf("(2) Delete User\n");
+		printf("(3) Print Users\n");
 		printf("(0) Exit\n");
 		scanf("%d", &opt);
 	}
@@ -82,6 +90,7 @@ int main(int argc, char const *argv[])
 
 	printf("%s\n", "Inserting User into Memory...");					//Writing the users and passwords array to the Shared Memory
 	insertIntoSharedMemory(usernames, passwords);
+	printf("Restart Server to Update Changes\n");
 	sleep(1);
 
 
