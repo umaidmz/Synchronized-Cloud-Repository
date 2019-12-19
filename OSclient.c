@@ -485,13 +485,7 @@ int main(int argc, char *argv[]){
                 sscanf(msg_send, "%s %s", cmd, folderName);
                 printf("here cmd received %s\n",cmd);
                 printf("here fname received %s\n",folderName);
-                /*
-                if(send(sockfd, msg_send, strlen(msg_send), 0)<0){
-
-                    printf("error sending msg from client");
-                    exit(EXIT_FAILURE);
-                }
-                */
+                
                 send(sockfd, msg_send, strlen(msg_send), 0);
                 printf("here in client after send\n");
                 //commmand sent to server
@@ -502,14 +496,7 @@ int main(int argc, char *argv[]){
                     char buffer[maxlen];
                     char* pbuffer = buffer;
                     // will remain open until the server terminates the connection
-                    /*
-                    while ((n = recv(sockfd, pbuffer, maxlen, 0)) > 0) {
-                        pbuffer += n;
-                        maxlen -= n;
-                        len += n;
-                        buffer[len] = '\0';
-                    }
-                    */
+                    
                     read(sockfd, msgbuffer, 1024);
                     printf("Response from the server of ls command\n");
                     printf("%s\n", msgbuffer);;
@@ -519,25 +506,11 @@ int main(int argc, char *argv[]){
                 {
                     //upload command code here
                     printf("here in upload\n");
-                    //receive msg from server to send files
-                    char *res;
-                    read(sockfd, res, strlen(res));
-                    /*
-                    if(res)
-                    {
-                        //send mul files
-                        printf("here in res\n");
-                        uploadFiles(folderName);
-                        fflush(stdout);
-                        fflush(stdin);
-
-                    }
-                    else
-                    {
-                        printf("client folder response error\n");
-                    }
-                    */
-                        uploadFiles(folderName);
+                    
+                    /*char *res;
+                    read(sockfd, res, strlen(res));*/
+                   
+                        uploadFiles(folderName); //sending files to server
                         fflush(stdout);
                         fflush(stdin);
                     
@@ -546,11 +519,10 @@ int main(int argc, char *argv[]){
                 else if(!strcmp(cmd,"download")&& (folderName[0]!='\0' )){
                     //download command code here
                     printf("here in download\n");
-                    makeFolder(folderName);
-                    downloadFiles(folderName);
+                    makeFolder(folderName); //making the new folder in client
+                    downloadFiles(folderName); //downloading files from server
                     //recieve mul files
-                    //receiveNewFiles(folderName);
-
+                   
 
                 }
             else if(!strcmp(cmd,"sync") && (folderName[0]!='\0')){
@@ -577,6 +549,9 @@ int main(int argc, char *argv[]){
 
 
             }
+        }
+        else{
+            printf("Invalid username or password.\n");
         }
     }
     return 0;

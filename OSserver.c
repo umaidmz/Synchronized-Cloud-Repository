@@ -11,8 +11,12 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdbool.h>
+#include "admin.h"
 
 #define PORT 8080
+#ifndef SIZE
+#define SIZE 10
+
 int new_socket;
 
 struct user{
@@ -454,8 +458,25 @@ int main(int argc, char const *argv[]){
         msgread = read (new_socket, &login, sizeof(struct user));
         printf("received user credentials %s:%s\n", login.username, login.pwd);
         //add auth code here and then below code in if statement
+        
+        char usernames[SIZE][20] = {{0}};
+        char passwords[SIZE][20] = {{0}};
+        int index = preInitSharedMemory(usernames, passwords, 0);
+        int i,j;
+        for(i=0;i<index;++i)
+        {
+            if(strcmp(usernames[i],login.username))
+            {
+                printf("user found.\n");
+                if(strcmp(pwds[i],login.pwd))
+                {
+                    printf("user authorized.\n");
+                    loggedIn=true;
+                }
+            }
+        }
+        
 
-        loggedIn=true;
         send(new_socket,&loggedIn,sizeof(bool),0);
         if(loggedIn){
             while(!breaking){
@@ -570,6 +591,11 @@ int main(int argc, char const *argv[]){
                 }
                 
             }
+        }
+        else
+        {
+            printf("incorrect username or password.\n");
+            continue;
         }
     }
     
